@@ -6,6 +6,7 @@ import 'package:kroma/providers/auth_provider.dart';
 import 'package:kroma/models/board_models.dart';
 import 'package:kroma/providers/board_provider.dart';
 import 'package:kroma/ui/screens/card_canvas_screen.dart';
+import 'package:kroma/ui/widgets/text_prompt_dialog.dart';
 
 /// El tablero: columnas con tarjetas que se arrastran entre ellas.
 class BoardScreen extends ConsumerWidget {
@@ -160,34 +161,15 @@ class _ColumnView extends ConsumerWidget {
 
   Future<void> _showAddCardDialog(
       BuildContext context, WidgetRef ref, String columnId) async {
-    final controller = TextEditingController();
     final messenger = ScaffoldMessenger.of(context);
 
-    final title = await showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Nueva tarjeta'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: 'Título'),
-          onSubmitted: (value) => Navigator.of(context).pop(value.trim()),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancelar'),
-          ),
-          FilledButton(
-            onPressed: () =>
-                Navigator.of(context).pop(controller.text.trim()),
-            child: const Text('Crear'),
-          ),
-        ],
-      ),
+    final title = await promptForText(
+      context,
+      title: 'Nueva tarjeta',
+      label: 'Título',
+      confirmLabel: 'Crear',
     );
 
-    controller.dispose();
     if (title == null || title.isEmpty) return;
 
     try {
@@ -304,31 +286,14 @@ class _CardTile extends ConsumerWidget {
     }
 
     if (action == 'rename') {
-      final controller = TextEditingController(text: card.title);
-      final title = await showDialog<String>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Renombrar tarjeta'),
-          content: TextField(
-            controller: controller,
-            autofocus: true,
-            onSubmitted: (value) => Navigator.of(context).pop(value.trim()),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancelar'),
-            ),
-            FilledButton(
-              onPressed: () =>
-                  Navigator.of(context).pop(controller.text.trim()),
-              child: const Text('Guardar'),
-            ),
-          ],
-        ),
+      final title = await promptForText(
+        context,
+        title: 'Renombrar tarjeta',
+        label: 'Título',
+        confirmLabel: 'Guardar',
+        initialValue: card.title,
       );
 
-      controller.dispose();
       if (title == null || title.isEmpty || title == card.title) return;
 
       try {
