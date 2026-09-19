@@ -1,17 +1,51 @@
-# notes_app
+# Kroma
 
-A new Flutter project.
+Notas manuscritas organizadas en tableros: la escritura a mano de GoodNotes con la
+organización de Notion.
 
-## Getting Started
+Escribe con lápiz dentro de las tarjetas de un tablero **Por hacer / Haciendo / Hecho**.
 
-This project is a starting point for a Flutter application.
+## Qué es cada cosa
 
-A few resources to get you started if this is your first Flutter project:
+- **`kroma`** (este repositorio): la aplicación, hecha con Flutter. Funciona en Android y en
+  el navegador, y se desarrolla en Windows.
+- **`KromaApi`**: el backend, hecho con C# y ASP.NET Core sobre PostgreSQL.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Estructura
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+lib/
+  models/      clases de datos: trazos, tableros, tarjetas
+  services/    acceso a la API y almacenamiento del token
+  providers/   estado de la aplicación (Riverpod)
+  ui/
+    screens/   pantallas completas
+    widgets/   componentes reutilizables
+    painters/  dibujado del lienzo de tinta
+```
+
+## Ponerlo en marcha
+
+Arranca antes el backend (`dotnet run` en el repositorio `KromaApi`) y después:
+
+```bash
+flutter pub get
+flutter run -d chrome     # navegador
+flutter run -d windows    # escritorio, requiere Modo Desarrollador de Windows
+```
+
+Para apuntar a un servidor que no sea el local:
+
+```bash
+flutter run --dart-define=API_BASE_URL=https://tu-servidor.onrender.com
+```
+
+En el emulador de Android, `localhost` es el propio emulador: la app usa
+automáticamente `10.0.2.2`, que apunta a tu ordenador.
+
+## Pruebas
+
+```bash
+flutter test
+flutter analyze
+```

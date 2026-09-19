@@ -1,5 +1,5 @@
-name: notes_app
-description: "A new Flutter project."
+name: kroma
+description: "Kroma: notas manuscritas organizadas en tableros."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -34,6 +34,11 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  flutter_riverpod: ^3.4.3
+  perfect_freehand: ^2.5.2+1
+  uuid: ^4.6.0
+  dio: ^5.11.1
+  flutter_secure_storage: ^11.2.0
 
 dev_dependencies:
   flutter_test:

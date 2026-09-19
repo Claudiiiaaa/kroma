@@ -1,11 +1,11 @@
 {
-    "name": "notes_app",
-    "short_name": "notes_app",
+    "name": "Kroma",
+    "short_name": "Kroma",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Notas manuscritas organizadas en tableros.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
