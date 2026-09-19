@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          # Guarda el SDK entre ejecuciones: descargarlo cada vez son varios
+          # minutos de espera por cada push.
+          cache: true
+
+      - name: Dependencias
+        run: flutter pub get
+
+      - name: Análisis estático
+        run: flutter analyze
+
+      - name: Pruebas
+        run: flutter test
+
+      # Comprueba que la versión web sigue compilando, que es la que usará tu
+      # hermana. Un fallo aquí no lo detectarían las pruebas, porque estas se
+      # ejecutan en la máquina virtual de Dart y no en el navegador.
+      - name: Compilar para web
+        run: flutter build web --release
